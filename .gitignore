@@ -117,3 +117,6 @@ dmypy.json
 
 # SQLite dabatases
 *.db
+
+# Configuration file
+config.json
