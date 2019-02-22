@@ -6,7 +6,7 @@ import datetime
 from sqlalchemy import Column, UniqueConstraint
 from sqlalchemy.types import DateTime, Integer, String
 
-from boulet_bot.config.db import Base
+from boulet_bot.config.db import Base, engine
 
 
 class User(Base):
@@ -24,3 +24,6 @@ class User(Base):
         self.name = name
         self.boulet = 1
         self.boulet_date = datetime.datetime.now()
+
+
+Base.metadata.create_all(engine)

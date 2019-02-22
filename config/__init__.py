@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import json
+import os
 
 
 def get_config():
-    with open('./config.json') as config_file:
+    config_path = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(config_path, 'config.json')) as config_file:
         config = json.loads(config_file.read())
 
     return config
