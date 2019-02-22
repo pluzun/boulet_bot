@@ -1,15 +1,38 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from threading import Thread
+import asyncio
+import datetime
+import discord
+
+from boulet_bot.models.user import User
 
 
-class BouletDaemon(Thread):
-    def __init__(self):
-        Thread.__init__(self, bot)
-        self.daemon = True
-        self.bot = bot
-        self.start()
+async def remove_outdated_boulets(bot):
+    print('Starting daemon')
+    while True:
+        await asyncio.sleep(30)
 
-    def run(self):
-        pass
+        users = bot.session.query(User).all()
+        outdated_boulets = []
+
+        if len(bot.servers) > 0:
+            servers = bot.servers
+            for server in servers:
+                if str(server) == 'La Casa Del Gro':
+                    break
+        else:
+            continue
+
+        now = datetime.datetime.now()
+        role = discord.utils.get(server.roles, name=bot.boulet_role)
+
+        for user in users:
+            if user.boulet_date and user.boulet_date < now:
+                for server_user in server.members:
+                    if user.name == str(server_user):
+                        print('{} is not boulet anymore'.format(server_user))
+                        await bot.remove_roles(server_user, role)
+                        await bot.change_nickname(server_user, user.old_name)
+                        user.boulet_date = None
+                        bot.session.commit()

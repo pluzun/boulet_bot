@@ -39,7 +39,7 @@ def load_commands(bot):
             if str(boulet_user) != str(context.message.author):
 
                 now = datetime.datetime.now()
-                last_boulet = bot.boulet_time.get(str(context.message.author), now - datetime.timedelta(minutes=10))
+                last_boulet = bot.boulet_time.get(str(context.message.author), now - datetime.timedelta(minutes=5))
                 delta = now - last_boulet
 
                 if delta.total_seconds() > bot.boulet_interval:
@@ -55,6 +55,7 @@ def load_commands(bot):
                     if user.boulet % 10 == 0:
                         msg = '<@{}> a gagné le rôle de {} pour 24h!'.format(boulet_user.id, bot.boulet_role)
                         user.old_name = boulet_user.display_name
+
                         user.boulet_date = now + datetime.timedelta(days=1)
 
                         await bot.add_roles(boulet_user, role)
