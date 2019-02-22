@@ -15,7 +15,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
     boulet = Column(Integer, nullable=False)
-    boulet_date = Column(DateTime, nullable=False)
+    boulet_date = Column(DateTime, nullable=True)
     old_name = Column(String, nullable=True)
 
     UniqueConstraint('name', name='name_uc')
@@ -23,7 +23,5 @@ class User(Base):
     def __init__(self, name):
         self.name = name
         self.boulet = 1
-        self.boulet_date = datetime.datetime.now()
-
 
 Base.metadata.create_all(engine)
