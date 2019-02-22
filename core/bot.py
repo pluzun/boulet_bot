@@ -10,7 +10,7 @@ from .commands import load_commands
 
 class BouletBot(Bot):
         
-    def __init__(self, bot_prefix, boulet_role, token):
+    def __init__(self, bot_prefix, boulet_interval, boulet_role, token):
         Bot.__init__(self, command_prefix=bot_prefix)
         self.boulet_role = boulet_role
         self.boulet_time = {}
@@ -19,5 +19,6 @@ class BouletBot(Bot):
         }
         self.session = Session()
         self.token = token
+        self.boulet_interval = boulet_interval
         load_commands(self)
         self.run(token)

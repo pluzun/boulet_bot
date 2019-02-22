@@ -42,7 +42,7 @@ def load_commands(bot):
                 last_boulet = bot.boulet_time.get(str(context.message.author), now - datetime.timedelta(minutes=10))
                 delta = now - last_boulet
 
-                if delta.total_seconds() > 0:
+                if delta.total_seconds() > bot.boulet_interval:
                     bot.boulet_time[str(context.message.author)] = now
                     user = bot.session.query(User).filter(User.name == str(boulet_user)).first()
 
